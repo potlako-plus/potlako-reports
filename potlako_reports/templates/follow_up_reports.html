@@ -1,0 +1,36 @@
+{% extends 'edc_base/base.html' %}
+
+{% block main %}
+	<div class="alert alert-info text-center">
+  		<h2>Potlako Follow Up  Reports</h2>
+	</div>
+	<div class="alert alert-primary">
+		<div class="row w-100">
+		        <div class="col-md-4">
+		            <div class="card border-danger mx-sm-1 p-4">
+		                <div class="card border-danger shadow text-danger p-3 my-card" ><span aria-hidden="true"></span></div>
+		                <div class="text-danger text-center mt-3"><h4>Lost to Follow up Subjects</h4></div>
+		                <div class="text-danger text-center mt-2"><h1>{{ enrolled_subjects }}</h1></div>
+		            </div>
+		        </div>
+		        
+		        <div class="col-md-4">
+		            <div class="card border-danger mx-sm-1 p-4">
+		                <div class="card border-danger shadow text-danger p-3 my-card" ><span aria-hidden="true"></span></div>
+		                <div class="text-danger text-center mt-3"><h4>Off Study Subjects</h4></div>
+		                <div class="text-danger text-center mt-2"><h1>{{ not_enrolled_subjects }}</h1></div>
+		            </div>
+		        </div>
+		
+		        <div class="col-md-4">
+		            <div class="card border-success mx-sm-1 p-4">
+		                <div class="card border-success shadow text-success p-3 my-card"><span  aria-hidden="true"></span></div>
+		                <div class="text-success text-center mt-3"><h4>Dead Subjects</h4></div>
+		                <div class="text-success text-center mt-2"><h1>{{ screened_subjects }}</h1></div>
+		            </div>
+		        </div>
+		
+		       
+		     </div>
+		</div>
+{% endblock main%}
