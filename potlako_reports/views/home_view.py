@@ -19,6 +19,21 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
     cancer_dx_tx = 'potlako_subject.cancerdxandtxendpoint'
     cancer_dx_tx_endpoint = 'potlako_subject.cancerdxandtxendpoint'
     cancer_dx_tx = 'potlako_subject.cancerdxandtx'
+    clinician_call_enrollment_model = 'potlako_subject.cliniciancallenrollment'
+    worklist_model = 'potlako_follow.worklist'
+    investigation_worklist_model = 'potlako_follow.investigationfuworklist'
+
+    @property
+    def clinician_call_enrollment_cls(self):
+        return django_apps.get_model(self.clinician_call_enrollment_model)
+
+    @property
+    def worklist_cls(self):
+        return django_apps.get_model(self.worklist_model)
+
+    @property
+    def investigation_worklist_cls(self):
+        return django_apps.get_model(self.investigation_worklist_model)
 
     @property
     def cancer_dx_tx_endpoint_cls(self):
@@ -64,7 +79,31 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             ['Confirmed Cancer Diagnosis At 12 months',confirmed_cancer_diagnosis_12],
             ['Final Cancer Diagnosis At 6 months',final_cancer_diagnosis_6],
             ['Final Cancer Diagnosis At 12 months',final_cancer_diagnosis_12]
-            ]
+        ]
+        
+        worklist_count = self.worklist_cls.objects.all().count()
+        investigation_worklist = self.investigation_worklist_cls.objects.all().count()
+
+        enhanced_care = ['otse_clinic', 'mmankgodi_clinic',
+                         'letlhakeng_clinic',
+                         'mathangwane clinic', 'ramokgonami_clinic',
+                         'sefophe_clinic',
+                         'mmadinare_primary_hospital', 'tati_siding_clinic',
+                         'bokaa_clinic', 'masunga_primary_hospital',
+                         'masunga_clinic',
+                         'mathangwane_clinic', 'manga_clinic']
+        intervention = ['mmathethe_clinic', 'molapowabojang_clinic',
+                        'lentsweletau_clinic', 'oodi_clinic',
+                        'metsimotlhabe_clinic',
+                        'shoshong_clinic', 'lerala_clinic',
+                        'maunatlala_clinic',
+                        'nata_clinic', 'mandunyane_clinic',
+                        'sheleketla_clinic']
+
+        intervention_enrolled = self.clinician_call_enrollment_cls.objects.\
+            filter(facility__in=intervention).count()
+        enhanced_care_enrolled = self.clinician_call_enrollment_cls.objects. \
+            filter(facility__in=enhanced_care).count()
 
         context.update(
             screened_subjects=screened_subjects,
@@ -79,6 +118,12 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             
             enrollments=enrollments,
             cancers=cancers,
+            
+            worklist_count=worklist_count,
+            investigation_worklist=investigation_worklist,
+            intervention_enrolled=intervention_enrolled,
+            enhanced_care_enrolled=enhanced_care_enrolled,
+            
         )
 
         return context

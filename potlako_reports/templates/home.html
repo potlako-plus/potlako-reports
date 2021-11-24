@@ -197,20 +197,20 @@
 							  </thead>
 							  <tbody>
 							    <tr>
-							      <td>Screened</td>
-							      <td>{{ screened_subjects  }}</td>
+							      <td>Intervention Arm</td>
+							      <td>{{ intervention_enrolled  }}</td>
 							    </tr>
 							    <tr>
-							      <td>Enrolled</td>
-							      <td>{{ enrolled_subjects  }}</td>
+							      <td>Standard Care Arm </td>
+							      <td>{{ enhanced_care_enrolled  }}</td>
 							    </tr>
 							    <tr>
-							      <td>Not Enrolled</td>
-							      <td>{{ not_enrolled_subjects }}</td>
+							      <td>Appointment Worklist</td>
+							      <td>{{ worklist_count }}</td>
 							    </tr>
 							    <tr>
-							      <td>Consented</td>
-							      <td>{{ consented_subjects }}</td>
+							      <td>Investigations Worklist</td>
+							      <td>{{ investigation_worklist }}</td>
 							    </tr>
 							  </tbody>
 							</table>
@@ -231,20 +231,16 @@
 							  </thead>
 							  <tbody>
 							    <tr>
-							      <td>Confirmed Cancer Diagnosis At 6 months</td>
+							      <td>Lost to Follow up Subjects</td>
 							      <td>{{ confirmed_cancer_diagnosis_6  }}</td>
 							    </tr>
 							    <tr>
-							      <td>Confirmed Cancer Diagnosis At 12 months</td>
+							      <td>Off Study Subjects</td>
 							      <td>{{ confirmed_cancer_diagnosis_12  }}</td>
 							    </tr>
 							    <tr>
-							      <td>Final Cancer Diagnosis At 6 months</td>
+							      <td>Deceased Subjects</td>
 							      <td>{{ final_cancer_diagnosis_6 }}</td>
-							    </tr>
-							    <tr>
-							      <td>Final Cancer Diagnosis At 12 months</td>
-							      <td>{{ final_cancer_diagnosis_12 }}</td>
 							    </tr>
 							  </tbody>
 							</table>
