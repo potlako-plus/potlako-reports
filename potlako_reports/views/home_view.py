@@ -1,6 +1,5 @@
 from django.apps import apps as django_apps
 from django.views.generic.base import TemplateView
-from pip._internal import self_outdated_check
 
 from edc_base.view_mixins import EdcBaseViewMixin
 from edc_navbar import NavbarViewMixin
@@ -22,6 +21,7 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
     clinician_call_enrollment_model = 'potlako_subject.cliniciancallenrollment'
     worklist_model = 'potlako_follow.worklist'
     investigation_worklist_model = 'potlako_follow.investigationfuworklist'
+    
 
     @property
     def clinician_call_enrollment_cls(self):
@@ -104,6 +104,13 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             filter(facility__in=intervention).count()
         enhanced_care_enrolled = self.clinician_call_enrollment_cls.objects. \
             filter(facility__in=enhanced_care).count()
+            
+        
+        worklists = [
+            ['Intervention Arm',intervention_enrolled],
+            ['Standard Care Arm', enhanced_care_enrolled],
+            ['Appointment Worklist',worklist_count],
+            ['Investigations Worklist',investigation_worklist]]
 
         context.update(
             screened_subjects=screened_subjects,
@@ -118,11 +125,13 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             
             enrollments=enrollments,
             cancers=cancers,
+            worklists=worklists,
             
             worklist_count=worklist_count,
             investigation_worklist=investigation_worklist,
             intervention_enrolled=intervention_enrolled,
             enhanced_care_enrolled=enhanced_care_enrolled,
+            
             
         )
 

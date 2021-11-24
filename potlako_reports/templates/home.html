@@ -21,7 +21,7 @@
 
 {% block main %}
 	<div class="alert alert-info text-center">
-  		<h2>Potlako Plus Reports</h2>
+  		<h2>Potlako Plus Statistical Reports</h2>
 	</div>
 	
 		<div class="row">
@@ -93,97 +93,97 @@
 			    </div>
 		    </div>
 		    
-		    	<div class="row">
-		<div class="col-md-6">
-			    <canvas id="screeningChart" width="250" height="150"></canvas>
-			        <script>
-			        var ctx = document.getElementById('screeningChart').getContext('2d');
-			        var myChart = new Chart(ctx, {
-			            type: 'bar',
-			            data: {
-			                labels: [{% for enrollment in enrollments %}  '{{ enrollment.0 }}',  {% endfor %}],
-			                datasets: [{
-			                    label: 'Enrollments numbers',
-			                    data: [{% for enrollment in enrollments %}  {{ enrollment.1 }},  {% endfor %}],
-			                    backgroundColor: [
-			                        'rgba(255, 99, 132, 0.8)',
-			                        'rgba(54, 162, 235, 0.8)',
-			                        'rgba(255, 206, 86, 0.8)',
-			                        'rgba(75, 192, 192, 0.8)',
-			                        'rgba(153, 102, 255, 0.8)',
-			                        'rgba(255, 159, 64, 0.8)',
-			                        'rgba(240, 120, 50, 0.8)',
-			                    ],
-			                    borderColor: [
-			                        'rgba(255, 99, 132, 1)',
-			                        'rgba(54, 162, 235, 1)',
-			                        'rgba(255, 206, 86, 1)',
-			                        'rgba(75, 192, 192, 1)',
-			                        'rgba(153, 102, 255, 1)',
-			                        'rgba(255, 159, 64, 1)',
-			                        'rgba(240, 120, 50, 1)',
-			
-			                    ],
-			                    borderWidth: 2
-			                }]
-			            },
-			            options: {
-			                scales: {
-			                    y: {
-			                        beginAtZero: true
-			                    }
-			                }
-			            }
-			        });
-			        </script>
-			    </div>
-					<div class="col-md-6">
-				    <canvas id="myChart" width="250" height="150"></canvas>
-				        <script>
-				        var ctx = document.getElementById('myChart').getContext('2d');
-				        var myChart = new Chart(ctx, {
-				            type: 'bar',
-				            data: {
-				                labels: [{% for cancer in cancers %}  '{{ cancer.0 }}',  {% endfor %}],
-				                datasets: [{
-				                    label: 'Cancer numbers',
-				                    data: [{% for cancer in cancers %}  {{ cancer.1 }},  {% endfor %}],
-				                    backgroundColor: [
-				                        'rgba(255, 99, 132, 0.8)',
-				                        'rgba(54, 162, 235, 0.8)',
-				                        'rgba(255, 206, 86, 0.8)',
-				                        'rgba(75, 192, 192, 0.8)',
-				                        'rgba(153, 102, 255, 0.8)',
-				                        'rgba(255, 159, 64, 0.8)',
-				                        'rgba(240, 120, 50, 0.8)',
-				                    ],
-				                    borderColor: [
-				                        'rgba(255, 99, 132, 1)',
-				                        'rgba(54, 162, 235, 1)',
-				                        'rgba(255, 206, 86, 1)',
-				                        'rgba(75, 192, 192, 1)',
-				                        'rgba(153, 102, 255, 1)',
-				                        'rgba(255, 159, 64, 1)',
-				                        'rgba(240, 120, 50, 1)',
-				
-				                    ],
-				                    borderWidth: 2
-				                }]
-				            },
-				            options: {
-				                scales: {
-				                    y: {
-				                        beginAtZero: true
-				                    }
-				                }
-				            }
-				        });
-				        </script>
-				    </div>
-			</div>
-	  <hr/>
-	  <br/>
-	<div class="row">
+	    	<div class="row">
+				<div class="col-md-6">
+					    <canvas id="screeningChart" width="250" height="150"></canvas>
+					        <script>
+					        var ctx = document.getElementById('screeningChart').getContext('2d');
+					        var myChart = new Chart(ctx, {
+					            type: 'bar',
+					            data: {
+					                labels: [{% for enrollment in enrollments %}  '{{ enrollment.0 }}',  {% endfor %}],
+					                datasets: [{
+					                    label: 'Enrollments numbers',
+					                    data: [{% for enrollment in enrollments %}  {{ enrollment.1 }},  {% endfor %}],
+					                    backgroundColor: [
+					                        'rgba(255, 99, 132, 0.8)',
+					                        'rgba(54, 162, 235, 0.8)',
+					                        'rgba(255, 206, 86, 0.8)',
+					                        'rgba(75, 192, 192, 0.8)',
+					                        'rgba(153, 102, 255, 0.8)',
+					                        'rgba(255, 159, 64, 0.8)',
+					                        'rgba(240, 120, 50, 0.8)',
+					                    ],
+					                    borderColor: [
+					                        'rgba(255, 99, 132, 1)',
+					                        'rgba(54, 162, 235, 1)',
+					                        'rgba(255, 206, 86, 1)',
+					                        'rgba(75, 192, 192, 1)',
+					                        'rgba(153, 102, 255, 1)',
+					                        'rgba(255, 159, 64, 1)',
+					                        'rgba(240, 120, 50, 1)',
+					
+					                    ],
+					                    borderWidth: 2
+					                }]
+					            },
+					            options: {
+					                scales: {
+					                    y: {
+					                        beginAtZero: true
+					                    }
+					                }
+					            }
+					        });
+					        </script>
+					    </div>
+							<div class="col-md-6">
+						    <canvas id="myChart" width="250" height="150"></canvas>
+						        <script>
+						        var ctx = document.getElementById('myChart').getContext('2d');
+						        var myChart = new Chart(ctx, {
+						            type: 'bar',
+						            data: {
+						                labels: [{% for cancer in cancers %}  '{{ cancer.0 }}',  {% endfor %}],
+						                datasets: [{
+						                    label: 'Cancer numbers',
+						                    data: [{% for cancer in cancers %}  {{ cancer.1 }},  {% endfor %}],
+						                    backgroundColor: [
+						                        'rgba(255, 99, 132, 0.8)',
+						                        'rgba(54, 162, 235, 0.8)',
+						                        'rgba(255, 206, 86, 0.8)',
+						                        'rgba(75, 192, 192, 0.8)',
+						                        'rgba(153, 102, 255, 0.8)',
+						                        'rgba(255, 159, 64, 0.8)',
+						                        'rgba(240, 120, 50, 0.8)',
+						                    ],
+						                    borderColor: [
+						                        'rgba(255, 99, 132, 1)',
+						                        'rgba(54, 162, 235, 1)',
+						                        'rgba(255, 206, 86, 1)',
+						                        'rgba(75, 192, 192, 1)',
+						                        'rgba(153, 102, 255, 1)',
+						                        'rgba(255, 159, 64, 1)',
+						                        'rgba(240, 120, 50, 1)',
+						
+						                    ],
+						                    borderWidth: 2
+						                }]
+						            },
+						            options: {
+						                scales: {
+						                    y: {
+						                        beginAtZero: true
+						                    }
+						                }
+						            }
+						        });
+						        </script>
+						    </div>
+					</div>
+			  <hr/>
+			  <br/>
+		<div class="row">
 			<div class="col-md-6">
 				<div class="panel panel-info">
 					<div class="panel-heading"><b>Worklist numbers</b></div>
@@ -216,7 +216,6 @@
 							</table>
 				      </div>
 			    </div>
-			    
 		    </div>
 		    <div class="col-md-6">
 				<div class="panel panel-info">
@@ -244,7 +243,102 @@
 							    </tr>
 							  </tbody>
 							</table>
-				      </div>
-			    </div>
+				      	</div>
+			    	</div>
+		    	</div>
 		    </div>
+		    
+		    <hr/>
+			<br/>
+			
+		    <div class="row">
+				<div class="col-md-6">
+					    <canvas id="worklistChart" width="250" height="150"></canvas>
+					        <script>
+					        var ctx = document.getElementById('worklistChart').getContext('2d');
+					        var myChart = new Chart(ctx, {
+					            type: 'bar',
+					            data: {
+					                labels: [{% for worklist in worklists %}  '{{ worklist.0 }}',  {% endfor %}],
+					                datasets: [{
+					                    label: 'Worklist Numbers',
+					                    data: [{% for worklist in worklists %}  {{ worklist.1 }},  {% endfor %}],
+					                    backgroundColor: [
+					                        'rgba(255, 99, 132, 0.8)',
+					                        'rgba(54, 162, 235, 0.8)',
+					                        'rgba(255, 206, 86, 0.8)',
+					                        'rgba(75, 192, 192, 0.8)',
+					                        'rgba(153, 102, 255, 0.8)',
+					                        'rgba(255, 159, 64, 0.8)',
+					                        'rgba(240, 120, 50, 0.8)',
+					                    ],
+					                    borderColor: [
+					                        'rgba(255, 99, 132, 1)',
+					                        'rgba(54, 162, 235, 1)',
+					                        'rgba(255, 206, 86, 1)',
+					                        'rgba(75, 192, 192, 1)',
+					                        'rgba(153, 102, 255, 1)',
+					                        'rgba(255, 159, 64, 1)',
+					                        'rgba(240, 120, 50, 1)',
+					
+					                    ],
+					                    borderWidth: 2
+					                }]
+					            },
+					            options: {
+					                scales: {
+					                    y: {
+					                        beginAtZero: true
+					                    }
+					                }
+					            }
+					        });
+					        </script>
+					    </div>
+						<div class="col-md-6">
+						    <canvas id="myChart" width="250" height="150"></canvas>
+						        <script>
+						        var ctx = document.getElementById('myChart').getContext('2d');
+						        var myChart = new Chart(ctx, {
+						            type: 'bar',
+						            data: {
+						                labels: [{% for cancer in cancers %}  '{{ cancer.0 }}',  {% endfor %}],
+						                datasets: [{
+						                    label: 'Cancer numbers',
+						                    data: [{% for cancer in cancers %}  {{ cancer.1 }},  {% endfor %}],
+						                    backgroundColor: [
+						                        'rgba(255, 99, 132, 0.8)',
+						                        'rgba(54, 162, 235, 0.8)',
+						                        'rgba(255, 206, 86, 0.8)',
+						                        'rgba(75, 192, 192, 0.8)',
+						                        'rgba(153, 102, 255, 0.8)',
+						                        'rgba(255, 159, 64, 0.8)',
+						                        'rgba(240, 120, 50, 0.8)',
+						                    ],
+						                    borderColor: [
+						                        'rgba(255, 99, 132, 1)',
+						                        'rgba(54, 162, 235, 1)',
+						                        'rgba(255, 206, 86, 1)',
+						                        'rgba(75, 192, 192, 1)',
+						                        'rgba(153, 102, 255, 1)',
+						                        'rgba(255, 159, 64, 1)',
+						                        'rgba(240, 120, 50, 1)',
+						
+						                    ],
+						                    borderWidth: 2
+						                }]
+						            },
+						            options: {
+						                scales: {
+						                    y: {
+						                        beginAtZero: true
+						                    }
+						                }
+						            }
+						        });
+						        </script>
+						    </div>
+						 </div>
+			 
+		  
 {% endblock main%}
