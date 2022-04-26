@@ -1,47 +1,72 @@
-from concurrent.futures import ThreadPoolExecutor
-import imp
-from pyexpat import model
-from threading import Thread
-
 from django.apps import apps as django_apps
-from django.db.models import QuerySet, Model
-from django.views.generic.list import ListView
+from django.views.generic import TemplateView
 
-from dateutil.relativedelta import relativedelta
 from edc_base.view_mixins import EdcBaseViewMixin
 from edc_navbar import NavbarViewMixin
-from edc_sync.models import IncomingTransaction
-
-# TODO: use conversions
-from potlako_subject.models import SubjectConsent
 
 
-class SyncReportView(NavbarViewMixin, EdcBaseViewMixin, ListView):
+
+class SyncReportView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
     template_name = 'sync_report.html'
     navbar_selected_item = 'Sync Report'
     navbar_name = 'potlako_reports'
-    model = IncomingTransaction
-    context_object_name = 'incoming_transactions'
-    paginate_by = 20
-    ordering = ['-created']
 
-    def statistics(self):
-        pass
+    subject_consent_model = 'potlako_subject.subjectconsent'
+
+    packages = ('edc_appointment', 'potlako_subject'),
+
+    
+
+    @property
+    def subject_consent_cls(self):
+        return django_apps.get_model(self.subject_consent_model)
+
+
+    def calculate_statistics(self):
+
+        statistics = dict()
+
+        host_machines = set(self.subject_consent_cls.objects.values_list(
+            'hostname_created', flat=True))
+
+        models = {}
+
+        for package in self.packages:
+            temp = django_apps.all_models.get(package, None)
+
+            if temp:
+                models.update(temp)
+
+        for host_machine in host_machines:
+
+            host_machine_statistics = dict()
+
+            for model_cls in models.values():
+
+                if 'historical' in model_cls._meta.verbose_name:
+                    continue
+                try:
+                    count = model_cls.objects.filter(
+                        hostname_created=host_machine).count()
+                    host_machine_statistics.update(
+                        {model_cls._meta.verbose_name: count})
+                except:
+                    continue
+
+            statistics.update({host_machine: host_machine_statistics})
+
+        return statistics
 
     def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        queryset = self.get_queryset()
+        context = super().get_context_data(**kwargs)
 
-        errors = queryset.filter(is_error=True).count()
-        consumed = queryset.filter(is_consumed=True).count()
-        updates = queryset.filter(action='U').count()
-        deletes = queryset.filter(action='D').count()
-        inserts = queryset.filter(action='I').count()
+        statistics = self.calculate_statistics()
 
-        context.update(
-            errors=errors,
-            consumed = consumed,
-            updates = updates,
-            deletes = deletes,
-            inserts = inserts)
+        context.update(statistics=statistics)
         return context
+    
+
+
+
+
+    
