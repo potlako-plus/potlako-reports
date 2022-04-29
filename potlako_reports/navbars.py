@@ -30,4 +30,10 @@ potlako_reports.append_item(
                fa_icon='fa-cogs',
                url_name='potlako_reports:follow_up_url'))
 
+potlako_reports.append_item(
+    NavbarItem(name='Sync Report',
+               label='Sync Report',
+               fa_icon='fa-cogs',
+               url_name='potlako_reports:sync_report_url'))
+
 site_navbars.register(potlako_reports)
