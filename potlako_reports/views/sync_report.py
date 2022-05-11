@@ -1,6 +1,5 @@
 import enum
 from itertools import count
-import statistics
 from tabnanny import verbose
 from textwrap import indent
 from xml.sax.handler import property_encoding
@@ -27,6 +26,30 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     subject_screening_model = 'potlako_subject.subjectscreening'
     subject_visit_model = 'potlako_subject.subjectvisit'
     verbal_consent_model = 'potlako_subject.verbalconsent'
+    
+    non_crf_models = [
+         'edc_appointment.appointment',
+          'potlako_prn.deathreport',
+    ]
+    
+    # crf models of interest
+    
+    crf_models = [
+        'potlako_subject.patientcallinitial',
+        'potlako_subject.symptomandcareseekingassessment',
+        'potlako_subject.transport',
+        'potlako_subject.investigationsordered',
+        'potlako_subject.investigationsresulted',
+        'potlako_subject.medicaldiagnosis',
+        'potlako_subject.patientcallfollowup',
+        'potlako_subject.missedvisit',
+        'potlako_subject.homevisit',
+        'potlako_subject.cancerdxandtx'
+    ]
+    
+    
+    
+    
     
     @property
     def appointment_model_cls(self):
@@ -59,7 +82,7 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     
     @property
     def subject_visit_model_cls(self):
-        return django_apps.get_model(self.subject_visit_model)
+        return django_apps.get_model(self.subject_visit_model)    
 
     @property
     def host_machines(self):
@@ -107,13 +130,77 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
             
         return statistics
     
+    @property
+    def non_crf_statistics_totals(self):
+        statistics = []
+        for stat in self.non_crf_statistics:
+            statistics.append([stat[0], sum(stat[1:])])
+        # breakpoint()
+        return statistics
+    
+    @property
+    def hostmachine_non_crf_statistics(self):
+        statistics = []
+        
+        for index, host in enumerate(self.host_formatted_names):
+            temp = [host, ]
+            total = 0
+            for crf_stat in self.non_crf_statistics:
+                total += crf_stat[index+1]
+            temp.append(total)
+            statistics.append(temp)
+        return statistics
+    
+    @property
+    def hostmachine_crf_statistics(self):
+        statistics = []
+        
+        for index, host in enumerate(self.host_formatted_names):
+            temp = [host, ]
+            total = 0
+            for crf_stat in self.crf_statistics:
+                total += crf_stat[index+1]
+            temp.append(total)
+            statistics.append(temp)
+        return statistics
+    
+    
+    
+    @property
+    def crf_statistics(self):
+        statistics = []
+
+        
+        for model_class_name in self.crf_models:
+            
+            model_class = django_apps.get_model(model_class_name)
+            
+            model_class_statistics = []
+            
+            verbose_name = model_class._meta.verbose_name.title()
+            
+            model_class_statistics.append(verbose_name)
+                
+            for host_machine in self.host_machines:
+                counter = model_class.objects.filter(hostname_created__iexact=host_machine).count()
+                model_class_statistics.append(counter)
+                
+            statistics.append(model_class_statistics)
+        
+            
+        return statistics
+    
     
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         
         context.update(
             non_crf_statistics=self.non_crf_statistics,
-            host_machines = self.host_formatted_names
+            host_machines = self.host_formatted_names,
+            crf_statistics = self.crf_statistics,
+            non_crf_statistics_totals = self.non_crf_statistics_totals,
+            hostmachine_non_crf_statistics = self.hostmachine_non_crf_statistics,
+            hostmachine_crf_statistics = self.hostmachine_crf_statistics
         )
         
         return context
