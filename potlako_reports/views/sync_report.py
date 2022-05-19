@@ -26,6 +26,13 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     non_crf_models = [
          'edc_appointment.appointment',
           'potlako_prn.deathreport',
+          'potlako_prn.subjectoffstudy',
+          'potlako_subject.subjectconsent',
+          'potlako_subject.subjectlocator',
+          'potlako_subject.subjectscreening',
+          'potlako_subject.subjectvisit',
+          'potlako_subject.verbalconsent',
+          
     ]
     
     # crf models of interest
@@ -98,20 +105,10 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     @property
     def non_crf_statistics(self):
         statistics = []
-        models_classes = [
-            self.subject_visit_model_cls, 
-            self.subject_screening_model_cls, 
-            self.subject_consent_model_cls,
-            self.verbal_consent_model_cls,
-            self.appointment_model_cls,
-            self.subject_offstudy_model_cls,
-            self.death_report_model_cls,
-            self.subject_locator_model_cls,
-        ]
         
-        
-        for model_class in models_classes:
+        for model_name in self.non_crf_models:
             model_class_statistics = []
+            model_class = django_apps.get_model(model_name)
             
             verbose_name = model_class._meta.verbose_name.title()
             

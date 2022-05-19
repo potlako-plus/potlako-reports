@@ -1,0 +1,123 @@
+<div class="tab-content">
+
+    <div class="row">
+        <div class="col-md-6">
+                <div id="piechart_1" style="width: 600px; height: 500px;"></div>
+        </div>
+        <div class="col-md-6">
+                <div id="piechart_2" style="width: 600px; height: 500px;"></div>
+        </div>
+    </div>
+    
+    <div class="tab-pane well active in active" id="home">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    Non CRF Statistics
+                    </div>
+                    <div class="panel-body">
+                    <div class="table-responsive">
+                    <table class="fixed table table-hover table-sm table-condensed" id="non_crf_stats" class="display">
+                        <thead>
+                        <tr>
+                            <th >Name</th>
+                            {% for host_machine in host_machines %}
+                                <th> {{ host_machine }} </th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                        {% for non_crf_statistic in non_crf_statistics %}
+
+                            <tr>
+
+                                {% for value in non_crf_statistic %}
+
+                                    {% if forloop.counter == 1 %}
+                                        <td >{{ value }}</td>
+                                    
+                                    {% else %}
+
+                                        <td style="text-align: center;">{{ value }}</td>
+
+                                    {% endif %}
+                                {% endfor %}
+                                
+                            </tr>
+                        
+                        {% endfor %}
+                        
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %} <div class="col-md-4">
+                    <div class="panel-body">
+                        <div id="piechart" style="width: 500px; height: 300px;"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 500px; height: 300px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="500" height="300" aria-label="A chart." style="overflow: hidden;"><defs id="_ABSTRACT_RENDERER_ID_0"><filter id="_ABSTRACT_RENDERER_ID_3"><feGaussianBlur in="SourceAlpha" stdDeviation="2"></feGaussianBlur><feOffset dx="1" dy="1"></feOffset><feComponentTransfer><feFuncA type="linear" slope="0.1"></feFuncA></feComponentTransfer><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></defs><rect x="0" y="0" width="500" height="300" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="94" y="37.2" font-family="Arial" font-size="12" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">Caregiver Previous Study Data</text><rect x="94" y="27" width="313" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect></g><g><rect x="306" y="58" width="101" height="88" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g column-id="Tshilo Dikotla"><rect x="306" y="58" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="68.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Tshilo Dikotla</text></g><circle cx="312" cy="64" r="6" stroke="none" stroke-width="0" fill="#3366cc"></circle></g><g column-id="Tshipidi"><rect x="306" y="77" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="87.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Tshipidi</text></g><circle cx="312" cy="83" r="6" stroke="none" stroke-width="0" fill="#dc3912"></circle></g><g column-id="Mpepu"><rect x="306" y="96" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="106.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Mpepu</text></g><circle cx="312" cy="102" r="6" stroke="none" stroke-width="0" fill="#ff9900"></circle></g><g column-id="Mashi"><rect x="306" y="115" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="125.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Mashi</text></g><circle cx="312" cy="121" r="6" stroke="none" stroke-width="0" fill="#109618"></circle></g><g column-id="Mma Bana"><rect x="306" y="134" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="144.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Mma Bana</text></g><circle cx="312" cy="140" r="6" stroke="none" stroke-width="0" fill="#990099"></circle></g></g><g><path d="M191,114.19999999999999L191,59A92,92,0,0,1,240.43946289571116,73.41301972248436L210.77578515828446,119.96520788899375A36.800000000000004,36.800000000000004,0,0,0,191,114.19999999999999" stroke="#ffffff" stroke-width="1" fill="#3366cc"></path><text text-anchor="start" x="202.5386597506596" y="86.46349687310705" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">9%</text></g><g><path d="M210.77578515828446,119.96520788899375L240.43946289571116,73.41301972248436A92,92,0,0,1,282.5631699128413,159.95465887190306L227.62526796513652,154.58186354876122A36.800000000000004,36.800000000000004,0,0,0,210.77578515828446,119.96520788899375" stroke="#ffffff" stroke-width="1" fill="#dc3912"></path><text text-anchor="start" x="229.80309148426318" y="128.0381262541755" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">17.5%</text></g><g><path d="M163.92343711515457,126.07812723042242L123.30859278788647,88.69531807605608A92,92,0,0,1,191,59L191,114.19999999999999A36.800000000000004,36.800000000000004,0,0,0,163.92343711515457,126.07812723042242" stroke="#ffffff" stroke-width="1" fill="#990099"></path><path d="M120.36548812649023,85.98641886197156A96,96,0,0,1,191,55" stroke="#990099" stroke-width="2" fill-opacity="1" fill="none"></path><text text-anchor="start" x="147.25010939501442" y="94.22278691934254" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">13.2%</text></g><g><path d="M160.75668897731816,130.03378578795562L115.39172244329544,98.58446446988904A92,92,0,0,1,123.30859278788647,88.69531807605608L163.92343711515457,126.07812723042242A36.800000000000004,36.800000000000004,0,0,0,160.75668897731816,130.03378578795562" stroke="#ffffff" stroke-width="1" fill="#109618"></path></g><g><path d="M227.62526796513652,154.58186354876122L282.5631699128413,159.95465887190306A92,92,0,1,1,115.39172244329544,98.58446446988904L160.75668897731816,130.03378578795562A36.800000000000004,36.800000000000004,0,1,0,227.62526796513652,154.58186354876122" stroke="#ffffff" stroke-width="1" fill="#ff9900"></path><text text-anchor="start" x="150.809155412069" y="218.37149710183218" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">58.1%</text></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Previous Study</th><th>Total</th></tr></thead><tbody><tr><td>Tshilo Dikotla</td><td>387</td></tr><tr><td>Tshipidi</td><td>751</td></tr><tr><td>Mpepu</td><td>2,490</td></tr><tr><td>Mashi</td><td>94</td></tr><tr><td>Mma Bana</td><td>564</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 310px; left: 510px; white-space: nowrap; font-family: Arial; font-size: 12px; font-weight: bold;">564 (13.2%)</div><div></div></div></div>
+                    </div>
+            </div> {% endcomment %}
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="chart_div" style="width: 100%; height: 600px;"></div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    CRF Statistics
+                    </div>
+                    <div class="panel-body">
+                    <div class="table-responsive">
+                    <table class="fixed table table-hover table-sm table-condensed" id="crf_stats" class="display">
+                        <thead>
+                        <tr>
+                            <th >Name</th>
+                            {% for host_machine in host_machines %}
+                                <th> {{ host_machine }} </th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                        {% for crf_statistic in crf_statistics %}
+
+                            <tr>
+
+                                {% for value in crf_statistic %}
+
+                                    {% if forloop.counter == 1 %}
+                                        <td >{{ value }}</td>
+                                    
+                                    {% else %}
+
+                                        <td style="text-align: center;">{{ value }}</td>
+
+                                    {% endif %}
+                                {% endfor %}
+                                
+                            </tr>
+                        
+                        {% endfor %}
+                        
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %} <div class="col-md-4">
+                    <div class="panel-body">
+                        <div id="piechart" style="width: 500px; height: 300px;"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 500px; height: 300px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="500" height="300" aria-label="A chart." style="overflow: hidden;"><defs id="_ABSTRACT_RENDERER_ID_0"><filter id="_ABSTRACT_RENDERER_ID_3"><feGaussianBlur in="SourceAlpha" stdDeviation="2"></feGaussianBlur><feOffset dx="1" dy="1"></feOffset><feComponentTransfer><feFuncA type="linear" slope="0.1"></feFuncA></feComponentTransfer><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></defs><rect x="0" y="0" width="500" height="300" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="94" y="37.2" font-family="Arial" font-size="12" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">Caregiver Previous Study Data</text><rect x="94" y="27" width="313" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect></g><g><rect x="306" y="58" width="101" height="88" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g column-id="Tshilo Dikotla"><rect x="306" y="58" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="68.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Tshilo Dikotla</text></g><circle cx="312" cy="64" r="6" stroke="none" stroke-width="0" fill="#3366cc"></circle></g><g column-id="Tshipidi"><rect x="306" y="77" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="87.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Tshipidi</text></g><circle cx="312" cy="83" r="6" stroke="none" stroke-width="0" fill="#dc3912"></circle></g><g column-id="Mpepu"><rect x="306" y="96" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="106.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Mpepu</text></g><circle cx="312" cy="102" r="6" stroke="none" stroke-width="0" fill="#ff9900"></circle></g><g column-id="Mashi"><rect x="306" y="115" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="125.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Mashi</text></g><circle cx="312" cy="121" r="6" stroke="none" stroke-width="0" fill="#109618"></circle></g><g column-id="Mma Bana"><rect x="306" y="134" width="101" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="323" y="144.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Mma Bana</text></g><circle cx="312" cy="140" r="6" stroke="none" stroke-width="0" fill="#990099"></circle></g></g><g><path d="M191,114.19999999999999L191,59A92,92,0,0,1,240.43946289571116,73.41301972248436L210.77578515828446,119.96520788899375A36.800000000000004,36.800000000000004,0,0,0,191,114.19999999999999" stroke="#ffffff" stroke-width="1" fill="#3366cc"></path><text text-anchor="start" x="202.5386597506596" y="86.46349687310705" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">9%</text></g><g><path d="M210.77578515828446,119.96520788899375L240.43946289571116,73.41301972248436A92,92,0,0,1,282.5631699128413,159.95465887190306L227.62526796513652,154.58186354876122A36.800000000000004,36.800000000000004,0,0,0,210.77578515828446,119.96520788899375" stroke="#ffffff" stroke-width="1" fill="#dc3912"></path><text text-anchor="start" x="229.80309148426318" y="128.0381262541755" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">17.5%</text></g><g><path d="M163.92343711515457,126.07812723042242L123.30859278788647,88.69531807605608A92,92,0,0,1,191,59L191,114.19999999999999A36.800000000000004,36.800000000000004,0,0,0,163.92343711515457,126.07812723042242" stroke="#ffffff" stroke-width="1" fill="#990099"></path><path d="M120.36548812649023,85.98641886197156A96,96,0,0,1,191,55" stroke="#990099" stroke-width="2" fill-opacity="1" fill="none"></path><text text-anchor="start" x="147.25010939501442" y="94.22278691934254" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">13.2%</text></g><g><path d="M160.75668897731816,130.03378578795562L115.39172244329544,98.58446446988904A92,92,0,0,1,123.30859278788647,88.69531807605608L163.92343711515457,126.07812723042242A36.800000000000004,36.800000000000004,0,0,0,160.75668897731816,130.03378578795562" stroke="#ffffff" stroke-width="1" fill="#109618"></path></g><g><path d="M227.62526796513652,154.58186354876122L282.5631699128413,159.95465887190306A92,92,0,1,1,115.39172244329544,98.58446446988904L160.75668897731816,130.03378578795562A36.800000000000004,36.800000000000004,0,1,0,227.62526796513652,154.58186354876122" stroke="#ffffff" stroke-width="1" fill="#ff9900"></path><text text-anchor="start" x="150.809155412069" y="218.37149710183218" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">58.1%</text></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Previous Study</th><th>Total</th></tr></thead><tbody><tr><td>Tshilo Dikotla</td><td>387</td></tr><tr><td>Tshipidi</td><td>751</td></tr><tr><td>Mpepu</td><td>2,490</td></tr><tr><td>Mashi</td><td>94</td></tr><tr><td>Mma Bana</td><td>564</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 310px; left: 510px; white-space: nowrap; font-family: Arial; font-size: 12px; font-weight: bold;">564 (13.2%)</div><div></div></div></div>
+                    </div>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</div>
