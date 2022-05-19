@@ -1,9 +1,5 @@
-import enum
-from itertools import count
-from tabnanny import verbose
-from textwrap import indent
-from xml.sax.handler import property_encoding
 from django.apps import apps as django_apps
+from django.conf import settings
 from django.views.generic import TemplateView
 
 from edc_base.view_mixins import EdcBaseViewMixin
@@ -200,7 +196,8 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
             crf_statistics = self.crf_statistics,
             non_crf_statistics_totals = self.non_crf_statistics_totals,
             hostmachine_non_crf_statistics = self.hostmachine_non_crf_statistics,
-            hostmachine_crf_statistics = self.hostmachine_crf_statistics
+            hostmachine_crf_statistics = self.hostmachine_crf_statistics,
+            device_id = settings.DEVICE_ID
         )
         
         return context
