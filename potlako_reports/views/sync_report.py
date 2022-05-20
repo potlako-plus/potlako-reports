@@ -15,18 +15,10 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     navbar_name = 'potlako_reports'
     
     device_id = settings.DEVICE_ID if settings.DEVICE_ID != 67 else None
-        
+    
+    subject_consent_model = 'potlako_subject.subjectconsent'
 
     # Non crf models of interest
-    appointment_model = 'edc_appointment.appointment'
-    death_report_model = 'potlako_prn.deathreport'
-    subject_offstudy_model = 'potlako_prn.subjectoffstudy'
-    subject_consent_model = 'potlako_subject.subjectconsent'
-    subject_locator_model = 'potlako_subject.subjectlocator'
-    subject_screening_model = 'potlako_subject.subjectscreening'
-    subject_visit_model = 'potlako_subject.subjectvisit'
-    verbal_consent_model = 'potlako_subject.verbalconsent'
-    
     non_crf_models = [
          'edc_appointment.appointment',
           'potlako_prn.deathreport',
@@ -54,43 +46,11 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
         'potlako_subject.cancerdxandtx'
     ]
     
-    
-    
-    
-    
-    @property
-    def appointment_model_cls(self):
-        return django_apps.get_model(self.appointment_model)
-    
-    
-    @property
-    def verbal_consent_model_cls(self):
-        return django_apps.get_model(self.verbal_consent_model)
-    
-    @property
-    def death_report_model_cls(self):
-        return django_apps.get_model(self.death_report_model)
-    
-    @property
-    def subject_offstudy_model_cls(self):
-        return django_apps.get_model(self.subject_offstudy_model)
-
     @property
     def subject_consent_model_cls(self):
         return django_apps.get_model(self.subject_consent_model)
     
-    @property
-    def subject_locator_model_cls(self):
-        return django_apps.get_model(self.subject_locator_model)
     
-    @property
-    def subject_screening_model_cls(self):
-        return django_apps.get_model(self.subject_screening_model)
-    
-    @property
-    def subject_visit_model_cls(self):
-        return django_apps.get_model(self.subject_visit_model)    
-
     @property
     def host_machines(self):
         name_pattern = '[a-z_]+[0-9]+'
@@ -149,7 +109,6 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     @property
     def hostmachine_non_crf_statistics(self):
         statistics = []
-        breakpoint()
         for index, host in enumerate(self.host_formatted_names):
             temp = [host, ]
             total = 0
