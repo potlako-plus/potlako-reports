@@ -14,7 +14,7 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     navbar_selected_item = 'Sync Report'
     navbar_name = 'potlako_reports'
     
-    device_id = settings.DEVICE_ID if settings.DEVICE_ID != 40 else None
+    device_id = settings.DEVICE_ID if settings.DEVICE_ID != 99 else None
     
     subject_consent_model = 'potlako_subject.subjectconsent'
 
