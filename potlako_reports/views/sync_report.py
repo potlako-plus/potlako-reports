@@ -1,3 +1,4 @@
+import statistics
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.views.generic import TemplateView
@@ -44,6 +45,12 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
         'potlako_subject.missedvisit',
         'potlako_subject.homevisit',
         'potlako_subject.cancerdxandtx'
+    ]
+    
+    #crfs with in lines
+    inline_crf_models = [
+        'potlako_subject.missedcall',
+        'potlako_subject.facilityvisit',
     ]
     
     @property
@@ -158,8 +165,38 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
                 
             statistics.append(model_class_statistics)
         
-            
         return statistics
+    
+    @property
+    def inline_crfs_statistics(self):
+        statistics = []
+        
+        statistics = []
+
+        
+        for model_class_name in self.inline_crf_models:
+            
+            model_class = django_apps.get_model(model_class_name)
+            
+            model_class_statistics = []
+            
+            verbose_name = model_class._meta.verbose_name.title()
+            
+            model_class_statistics.append(verbose_name)
+
+            if self.device_id:
+                counter = model_class.objects.filter(device_created=self.device_id).count()
+                model_class_statistics.append(counter)
+            else:
+                for host_machine in self.host_machines:
+                    counter = model_class.objects.filter(hostname_created__iexact=host_machine).count()
+                    model_class_statistics.append(counter)
+                
+            statistics.append(model_class_statistics)
+        
+        return statistics
+            
+            
     
     
     def get_context_data(self, **kwargs):
@@ -172,6 +209,7 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
             non_crf_statistics_totals = self.non_crf_statistics_totals,
             hostmachine_non_crf_statistics = self.hostmachine_non_crf_statistics,
             hostmachine_crf_statistics = self.hostmachine_crf_statistics,
+            inline_crfs_statistics = self.inline_crfs_statistics,
             device_id = settings.DEVICE_ID
         )
         
