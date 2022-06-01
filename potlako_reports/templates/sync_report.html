@@ -72,10 +72,11 @@
 
 <div class="container" id="caregiver_previous_study_data_reports" style="display: block;">
 
-	{% if device_id %}
-		{% include './sync_report/node_sync_report.html' %}
-	{% else %}
+	{% if device_id == None %}
 		{% include './sync_report/server_sync_report.html' %}
+	{% else %}
+		{% include './sync_report/node_sync_report.html' %}
+		
 	{% endif %}
 </div>
 
