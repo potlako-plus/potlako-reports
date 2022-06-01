@@ -14,7 +14,7 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
     navbar_selected_item = 'Sync Report'
     navbar_name = 'potlako_reports'
     
-    device_id = settings.DEVICE_ID if settings.DEVICE_ID != 99 else None
+    device_id = None if settings.DEVICE_ID == '99' else settings.DEVICE_ID
     
     subject_consent_model = 'potlako_subject.subjectconsent'
 
@@ -209,7 +209,7 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
             hostmachine_non_crf_statistics = self.hostmachine_non_crf_statistics,
             hostmachine_crf_statistics = self.hostmachine_crf_statistics,
             inline_crfs_statistics = self.inline_crfs_statistics,
-            device_id = settings.DEVICE_ID
+            device_id = self.device_id,
         )
         
         return context
