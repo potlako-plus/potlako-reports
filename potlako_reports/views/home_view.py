@@ -5,7 +5,7 @@ from edc_base.view_mixins import EdcBaseViewMixin
 from edc_navbar import NavbarViewMixin
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
-
+from edc_constants.constants import MALE, FEMALE
 
 
 class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
@@ -86,7 +86,50 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             )
         
         return enrollment_data
+    
+    @property
+    def enrollment_timeseries_statistics_by_gender(self):
+        """Time series data from the first consent
+
+        Returns:
+            list: Data calculate from 2020, up-to-date
+        """
+        current_year = datetime.now()
+        months = []
+        initial_date = self.subject_consent_cls.objects.latest('-report_datetime').report_datetime.date()
+        
+        while True:
             
+            if initial_date.year == current_year.year and initial_date.month == current_year.month:
+                break
+            
+            months.append(initial_date)
+            initial_date += relativedelta(months=1)
+        
+        enrollment_dates = list()
+        gender_statistics = list()
+        
+        
+        for date in months:
+            female_consents_count = self.subject_consent_cls.objects.filter(
+                report_datetime__year=date.year, report_datetime__month=date.month, gender=FEMALE).count()
+            
+            male_consents_count = self.subject_consent_cls.objects.filter(
+                report_datetime__year=date.year, report_datetime__month=date.month, gender=MALE).count()
+            
+            date_year = date.year
+            date_month = date.month
+            
+            enrollment_dates.append(
+                f"{date_year}-{date_month}"
+            )
+            gender_statistics.append(
+                (female_consents_count, male_consents_count)
+            )
+            
+            
+        
+        return (enrollment_dates, gender_statistics)
             
 
     def get_context_data(self, **kwargs):
@@ -169,7 +212,8 @@ class HomeView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             investigation_worklist=investigation_worklist,
             intervention_enrolled=intervention_enrolled,
             enhanced_care_enrolled=enhanced_care_enrolled,
-            enrollment_timeseries_statistics = self.enrollment_timeseries_statistics
+            enrollment_timeseries_statistics = self.enrollment_timeseries_statistics,
+            enrollment_timeseries_statistics_by_gender=self.enrollment_timeseries_statistics_by_gender
             
             
         )
