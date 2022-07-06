@@ -1,0 +1,43 @@
+{% extends 'edc_base/base.html' %}
+
+{% block main %}
+	<div class="alert alert-info text-center">
+  		<h2>Potlako Plus Worklist Report</h2>
+	</div>
+	<div class="alert alert-primary">
+		<div class="row w-100">
+				 <div class="col-md-3">
+		            <div class="card border-success mx-sm-1 p-3">
+		                <div class="card border-success shadow text-success p-3 my-card"><span  aria-hidden="true"></span></div>
+		                <div class="text-success text-center mt-3"><h4>Intervention Arm</h4></div>
+		                <div class="text-success text-center mt-2"><h1>{{ intervention_enrolled }}</h1></div>
+		            </div>
+		        </div>
+		
+		        <div class="col-md-3">
+		            <div class="card border-info mx-sm-1 p-3">
+		                <div class="card border-info shadow text-info p-3 my-card" ><span  aria-hidden="true"></span></div>
+		                <div class="text-info text-center mt-3"><h4>Standard Care Arm </h4></div>
+		                <div class="text-info text-center mt-2"><h1>{{ enhanced_care_enrolled }}</h1></div>
+		            </div>
+		        </div>
+		        
+		        <div class="col-md-3">
+		            <div class="card border-danger mx-sm-1 p-3">
+		                <div class="card border-danger shadow text-danger p-3 my-card" ><span aria-hidden="true"></span></div>
+		                <div class="text-danger text-center mt-3"><h4>Appointment Worklist</h4></div>
+		                <div class="text-danger text-center mt-2"><h1>{{ worklist_count }}</h1></div>
+		            </div>
+		        </div>
+		        
+		        <div class="col-md-3">
+		            <div class="card border-danger mx-sm-1 p-3">
+		                <div class="card border-danger shadow text-danger p-3 my-card" ><span aria-hidden="true"></span></div>
+		                <div class="text-danger text-center mt-3"><h4>Investigations Worklist</h4></div>
+		                <div class="text-danger text-center mt-2"><h1>{{ investigation_worklist }}</h1></div>
+		            </div>
+		        </div>
+		
+		     </div>
+		</div>
+{% endblock main%}

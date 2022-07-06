@@ -1,0 +1,85 @@
+{% extends 'edc_base/base.html' %} 
+
+{% block extra-scripts %}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<script>
+		$(document).ready( function () {
+			$('#non_crf_stats').DataTable();
+		} );
+
+		$(document).ready( function () {
+			$('#crf_stats').DataTable();
+		} );
+
+
+
+		google.charts.load("current", {packages:["corechart"]});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data1 = google.visualization.arrayToDataTable([
+			['Task', 'Hous per Day'],
+				{% for statistic in non_crf_statistics_totals %}
+					['{{ statistic.0 }}', {{statistic.1}}],	
+				{% endfor %}
+			]);
+
+			var data2 = google.visualization.arrayToDataTable([
+			['Task', 'Hours per Day'],
+				{% for statistic in hostmachine_non_crf_statistics %}
+					['{{ statistic.0 }}', {{statistic.1}}],	
+				{% endfor %}
+			]);
+
+			var data3 = google.visualization.arrayToDataTable([
+						['Machine', 'CRFs'],
+						{% for statistic in hostmachine_crf_statistics %}
+							['{{ statistic.0 }}', {{statistic.1}}],	
+						{% endfor %}
+					]);
+
+			var option1 = {
+			title: 'Stats. per CRF',
+			is3D: true,
+			};
+
+			var option2 = {
+			title: 'Stats. per Machine',
+			is3D: true,
+			};
+
+			var option3 = {
+			title: 'Machine vs CRFs Statistics',
+			legend: { position: 'none' },
+			};
+
+			var pieChart1 = new google.visualization.PieChart(document.getElementById('piechart_1'));
+			pieChart1.draw(data1, option1);
+
+			var pieChart2 = new google.visualization.PieChart(document.getElementById('piechart_2'));
+			pieChart2.draw(data2, option2);
+
+			var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+        	chart.draw(data3, option3);
+		}
+	</script>
+
+{% endblock extra-scripts %} 
+{% block main %}
+
+<div class="container" id="caregiver_previous_study_data_reports" style="display: block;">
+
+	{% if device_id == None %}
+		{% include './sync_report/server_sync_report.html' %}
+	{% else %}
+		{% include './sync_report/node_sync_report.html' %}
+		
+	{% endif %}
+</div>
+
+{% endblock main%}
+
+
