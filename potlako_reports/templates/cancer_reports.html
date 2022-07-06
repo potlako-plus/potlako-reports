@@ -35,50 +35,114 @@
         .appendTo( '#example .col-sm-6:eq(0)' );
     } );
 
+
+    $(document).ready(function() {
+        $('#cancer_participants').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+
+    table.buttons().container()
+        .appendTo( '#cancer_participants .col-sm-6:eq(0)' );
+    } );
+
 </script>
 {% endblock extra-scripts %}
 
 {%block main %}
 
-<div class="panel panel-info">
-  <!-- Default panel contents -->
-<div class="panel-body">
-   
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>Subject Identifier</th>
-                <th>Final Cancer Diagnosis</th>
-                <th>Final Non-Cancer Diagnosis</th>
-                <th>Cancer stage at diagnosis</th>
-                <th>Intent of cancer treatment</th>
-            </tr>
-        </thead>
-        <tbody>
-         {% for cancer_subject in cancer_subjects %}
-            <tr>
-                <td>{{ cancer_subject.subject_identifier }}</td>
-                 <td>{{ cancer_subject.final_cancer_diagnosis }}</td>
-                <td>{{ cancer_subject.non_cancer_diagnosis }}</td>
-                <td>{{ cancer_subject.cancer_diagnosis_stage }}</td>
-                <td>{{ cancer_subject.treatment_intent }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Subject Identifier</th>
-                <th>Final Cancer Diagnosis</th>
-                <th>Final Non-Cancer Diagnosis</th>
-                <th>Cancer stage at diagnosis</th>
-                <th>Intent of cancer treatment</th>
-            </tr>
-            
-        </tfoot>
-    </table>
-  </div>
+
+<div class="row">
+    
+
+    <div class="col-md-8">
+        <div class="panel panel-info">
+            <div class="panel-heading"><b>Cancer numbers</b></div>
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Overall</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Not on cancer treatment</td>
+                            <td>{{ cancer_treatment.0  }}</td>
+                        </tr>
+                        <tr>
+                            <td>On cancer treatment</td>
+                            <td>{{ cancer_treatment.1  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Confirmed Cancer Diagnosis At 6 months</td>
+                            <td>{{ confirmed_cancer_diagnosis_6  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Confirmed Cancer Diagnosis At 12 months</td>
+                            <td>{{ confirmed_cancer_diagnosis_12  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Final Cancer Diagnosis At 6 months</td>
+                            <td>{{ final_cancer_diagnosis_6 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Final Cancer Diagnosis At 12 months</td>
+                            <td>{{ final_cancer_diagnosis_12 }}</td>
+                        </tr>
+    
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+	</div>
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-info">
+        <!-- Default panel contents -->
+        <div class="panel-body">
+        
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Subject Identifier</th>
+                        <th>Final Cancer Diagnosis</th>
+                        <th>Final Non-Cancer Diagnosis</th>
+                        <th>Cancer stage at diagnosis</th>
+                        <th>Intent of cancer treatment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for cancer_subject in cancer_subjects %}
+                    <tr>
+                        <td>{{ cancer_subject.subject_identifier }}</td>
+                        <td>{{ cancer_subject.final_cancer_diagnosis }}</td>
+                        <td>{{ cancer_subject.non_cancer_diagnosis }}</td>
+                        <td>{{ cancer_subject.cancer_diagnosis_stage }}</td>
+                        <td>{{ cancer_subject.treatment_intent }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Subject Identifier</th>
+                        <th>Final Cancer Diagnosis</th>
+                        <th>Final Non-Cancer Diagnosis</th>
+                        <th>Cancer stage at diagnosis</th>
+                        <th>Intent of cancer treatment</th>
+                    </tr>
+                    
+                </tfoot>
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock main %}
