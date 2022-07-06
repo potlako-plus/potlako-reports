@@ -53,7 +53,8 @@ class CancerView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             final_cancer_diagnosis_12=final_cancer_diagnosis_12,
             confirmed_cancer_diagnosis_6=confirmed_cancer_diagnosis_6,
             confirmed_cancer_diagnosis_12=confirmed_cancer_diagnosis_12,
-            cancer_treatment = self.cancer_treatment_statistics
+            cancer_treatment = self.cancer_treatment_statistics,
+            cancer_diagnoses_treatments = self.cancer_dx_tx_cls.objects.all()
         )
 
         return context
