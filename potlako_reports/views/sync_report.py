@@ -1,6 +1,8 @@
 import statistics
 from django.apps import apps as django_apps
 from django.conf import settings
+from django.db.models.functions import Cast, Substr
+from django.db.models.fields import IntegerField
 from django.views.generic import TemplateView
 
 from edc_base.view_mixins import EdcBaseViewMixin
@@ -26,11 +28,11 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
           'potlako_subject.subjectscreening',
           'potlako_subject.subjectvisit',
           'potlako_subject.verbalconsent',
-
+          'edc_action_item.actionitem'
+          
     ]
 
     # crf models of interest
-
     crf_models = [
         'potlako_subject.patientcallinitial',
         'potlako_subject.symptomandcareseekingassessment',
@@ -93,11 +95,16 @@ class SyncReportView(TemplateView, NavbarViewMixin, EdcBaseViewMixin):
             model_class_statistics.append(verbose_name)
 
             if self.device_id:
+                # ___-__40____-_	132-40400066-4	
                 counter = model_class.objects.filter(device_created=self.device_id,).count()
                 model_class_statistics.append(counter)
             else:
                 for host_machine in self.host_machines:
-                    counter = model_class.objects.filter(device_created=host_machine).count()
+                    
+                    counter = model_class.objects.annotate(
+                        machine_id = Substr('subject_identifier', 7, 2)
+                        ).filter(machine_id = host_machine).count()
+                    
                     model_class_statistics.append(counter)
 
             statistics.append(model_class_statistics)
