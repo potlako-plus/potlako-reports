@@ -25,97 +25,131 @@
   		<h3>Potlako Plus Statistical Reports</h3>
 	</div>
 	<div class="row">
-		<div class="col-md-12">
-			<canvas id="enrollment_timeseries_statistics" width="100%" height="50px"></canvas>
-			<script>
-				var ctx = document.getElementById('enrollment_timeseries_statistics').getContext('2d');
-				var test = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: [
-							{% for data in enrollment_timeseries_statistics %}
-									'{{ data.0 }}',
-							{% endfor %}
-						],
-						datasets: [{
-							label: 'Enrollments Per Month',
-							data: [
-								{% for data in enrollment_timeseries_statistics %}
-									{{ data.1 }},
-								{% endfor %}
-							],
-							backgroundColor: [
+        <div class="col-md-12">
+        <figure class="highcharts-figure">
+            <div id="enrollment"></div>
+            <p class="highcharts-description"><center>
+                Bar chart shows the count for all enrollments per month
+           </center> </p>
+        </figure>
+        <script>
+            
+                Highcharts.chart('enrollment', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Enrollments Per Month'
+                    },
+                    xAxis: {
+                        categories:[{% for data in enrollment_timeseries_statistics %} '{{data.0}}',{% endfor %}],
+                        title: {
+                            text: null
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 35,
+                        title: {
+                            text: 'Enrollement Count',
+                        },
+                        labels: {
+                            overflow: 'justify'
+                        }
+                    },
 
-								'rgba(75, 192, 192, 0.8)',
-
-							],
-							borderWidth: 2
-						}]
-					},
-					options: {
-						scales: {
-							y: {
-								beginAtZero: true
-							}
-						}
-					}
-				});
-			</script>
-		</div>
+                    plotOptions: {
+                        bar: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Enrollments',
+                        data: [{% for data in enrollment_timeseries_statistics %} {{data.1}},{% endfor %}],
+                    },]
+                });
+        
+            
+        </script>
 	</div>
+</div>
 	<br>
 	<br>
 	<div class="row">
-		<div class="col-md-12">
-			<canvas id="enrollment_statistics_by_gender" width="100%" height="50px"></canvas>
-			<script>
-				var ctx = document.getElementById('enrollment_statistics_by_gender').getContext('2d');
-				var test = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: [
-							{% for data in enrollment_timeseries_statistics_by_gender.0 %}
-									'{{ data }}',
-							{% endfor %}
-						],
-						datasets: [
-						{
-							label: 'Females Enrolled',
-							data: [
-								{% for data in enrollment_timeseries_statistics_by_gender.1 %}
-									{{ data.0 }},
-								{% endfor %}
-							],
-							backgroundColor: [
-								'rgba(255, 99, 132, 0.8)',
-							],
+	<div class="col-md-12">
+        <figure class="highcharts-figure">
+            <div id="month_enrol"></div>
+            <p class="highcharts-description center"><center>
+                Bar chart shows the count for all Participants across months per gender
+                
+			</center> </p>
+        </figure>
+        <script>
 
-						},
-						{
-							label: 'Males Enrolled',
-							data: [
-								{% for data in  enrollment_timeseries_statistics_by_gender.1 %}
-									{{ data.1 }},
-								{% endfor %}
-							],
-							backgroundColor: [
-								'rgba(54, 162, 235, 0.8)',
-							],
-						}]
-					},
-					options: {
-						scales: {
-							y: {
-								beginAtZero: true
-							}
-						}
-					}
-				});
-			</script>
-		</div>
-	</div>
-	<br>
-	<br>
+            Highcharts.chart('month_enrol', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                  text: 'Participants Categorised By Gender Per Month'
+              },
+                xAxis: {
+                    categories: [{% for data in enrollment_timeseries_statistics_by_gender.0 %} '{{data}}',{% endfor %}],
+                    title: {
+                        text: null
+                    },
+                    labels: {
+                      rotation: -45,
+                      style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                      }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    max: 30,
+                    title: {
+                        text: 'Participant Count'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [
+                {
+                    name: 'Females',
+                    data: [{% for data in enrollment_timeseries_statistics_by_gender.1 %} {{data.0}}, {% endfor %}],
+                    
+                },{
+                    name: 'Males',
+                    data: [{% for data in enrollment_timeseries_statistics_by_gender.1 %} {{data.1}}, {% endfor %}],
+                    
+
+                }]
+            });
+          
+        </script>
+    </div>
+</div>
+</div>
+<br>
+<br>
 	
 		<div class="row">
 			<div class="col-md-6">
@@ -230,6 +264,7 @@
 					        });
 					        </script>
 					    </div>
+						
 							<div class="col-md-6">
 						    <canvas id="myChart" width="250" height="150"></canvas>
 						        <script>
