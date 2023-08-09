@@ -24,16 +24,15 @@ class CancerView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
     @property
     def cancer_dx_tx_cls(self):
         return django_apps.get_model(self.cancer_dx_tx)
-    
+
     @property
     def cancer_treatment_statistics(self):
-        on_cancer_treatment = self.cancer_dx_tx_cls.objects.filter(cancer_treatment=NO).count()
-        not_on_cancer_treatment = self.cancer_dx_tx_cls.objects.filter(cancer_treatment=YES).count()
-        
-        return (on_cancer_treatment, not_on_cancer_treatment)
+        on_cancer_treatment = self.cancer_dx_tx_cls.objects.filter(
+            cancer_treatment=NO).count()
+        not_on_cancer_treatment = self.cancer_dx_tx_cls.objects.filter(
+            cancer_treatment=YES).count()
 
-        
-        
+        return (on_cancer_treatment, not_on_cancer_treatment)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -41,11 +40,14 @@ class CancerView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
         twelve_months = date.today() + relativedelta(months=-12)
 
         cancer_dx_tx_endpoint_subjects = self.cancer_dx_tx_endpoint_cls.objects.all()
-        final_cancer_diagnosis_6 = self.cancer_dx_tx_endpoint_cls.objects.filter(diagnosis_date__lte=six_months).count()
-        final_cancer_diagnosis_12 = self.cancer_dx_tx_endpoint_cls.objects.filter(diagnosis_date__lte=twelve_months).count()
-        confirmed_cancer_diagnosis_6 = self.cancer_dx_tx_cls.objects.filter(diagnosis_date__lte=six_months).count()
-        confirmed_cancer_diagnosis_12 = self.cancer_dx_tx_cls.objects.filter(diagnosis_date__lte=twelve_months).count()
-        
+        final_cancer_diagnosis_6 = self.cancer_dx_tx_endpoint_cls.objects.filter(
+            diagnosis_date__lte=six_months).count()
+        final_cancer_diagnosis_12 = self.cancer_dx_tx_endpoint_cls.objects.filter(
+            diagnosis_date__lte=twelve_months).count()
+        confirmed_cancer_diagnosis_6 = self.cancer_dx_tx_endpoint_cls.objects.filter(
+            diagnosis_date__lte=six_months).count()
+        confirmed_cancer_diagnosis_12 = self.cancer_dx_tx_endpoint_cls.objects.filter(
+            diagnosis_date__lte=twelve_months).count()
 
         context.update(
             cancer_subjects=cancer_dx_tx_endpoint_subjects,
@@ -53,8 +55,8 @@ class CancerView(NavbarViewMixin, EdcBaseViewMixin, TemplateView):
             final_cancer_diagnosis_12=final_cancer_diagnosis_12,
             confirmed_cancer_diagnosis_6=confirmed_cancer_diagnosis_6,
             confirmed_cancer_diagnosis_12=confirmed_cancer_diagnosis_12,
-            cancer_treatment = self.cancer_treatment_statistics,
-            cancer_diagnoses_treatments = self.cancer_dx_tx_cls.objects.all()
+            cancer_treatment=self.cancer_treatment_statistics,
+            cancer_diagnoses_treatments=self.cancer_dx_tx_cls.objects.all()
         )
 
         return context
